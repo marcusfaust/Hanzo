@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %} - Run Log {% endblock %}
+{% block content %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Execution Time</th>
+            <th>New Nars Founds</th>
+            <th>Run Time Duration</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entry in entries %}
+        <td>{% entry.start_datetime %}</td>
+        <td>{% entry.nars_found %}</td>
+        <td>{% entry.duration %}</td>
+    {% endfor %}
+    </tbody>
+</table>

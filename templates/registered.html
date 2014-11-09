@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %} - Registered - {% endblock %}
+{% block content %}
+ <title>Thank You</title>
+ <h2>You Have Been Registered.</h2>
+    <p></p>
+    <p></p>
+ <h3>Instructions:</h3>
+    <p></p>
+    <p></p>
+    <ol>
+        <li>Within your box account you should have a "NarTransport-Incoming"
+        and a "NarTransport-Archive" folder added as a collaboration.</li>
+        <li>To create an assessment, Create a folder within the incoming folder.  The name of this folder will be the name used for the assessment.</li>
+        <li>Within the newly created folder, upload a single zip file containing NARS from a single SP (only zip files supported at this time).</li>
+        <li>Create as many folders as you like.  The backend process runs hourly.</li>
+        <li>Once the backend processes your upload, the folder will be renamed with a timestamp and moved off to the archive folder.</li>
+        <li>Click "NarTransport Front End" to view the runlog or just go to "http://nartransport.herokuapp.com".</li>
+    </ol>
+{% endblock %}
