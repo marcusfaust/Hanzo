@@ -1,16 +1,35 @@
-import os
-from flask import Flask, render_template, url_for
-
-app = Flask(__name__)
-app.config.from_object('config')
+import requests
+from config import *
 
 
+class RazorSession:
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+    def __init__(self, razorurl):
+        self.baseurl = razorurl
+        pass
+
+    def getNodes(self):
+
+        nodeinfo = {}
+
+        #Get Node ID's
+        url = self.baseurl + "/collections/nodes"
+        r = requests.get(url)
+        results = r.json()
+
+        #Get Details from Each Node
+        for node in results['items']:
+            nodename = node['name']
+            url = self.baseurl + "/collections/nodes/" + nodename
+            r = requests.get(url)
+            nodeinfo[nodename] = r.json()
+            print nodename
+
+        pass
+
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port, debug=True)
+
+    razor = RazorSession(RAZOR_REST_URL)
+    razor.getNodes()
