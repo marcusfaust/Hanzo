@@ -1,15 +1,21 @@
 import os
 from flask import Flask, render_template
 from Hanzo import *
+from config import *
 
 app = Flask(__name__)
 app.config.from_object('config')
-
+razor = RazorSession(RAZOR_REST_URL)
+nodeinfo = razor.getNodes()
 
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', nodeinfo = nodeinfo)
+
+@app.route('/nodes')
+def nodes():
+    return render_template('nodes.html', nodeinfo = nodeinfo)
 
 
 if __name__ == '__main__':

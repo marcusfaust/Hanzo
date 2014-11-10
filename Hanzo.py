@@ -23,13 +23,16 @@ class RazorSession:
             url = self.baseurl + "/collections/nodes/" + nodename
             r = requests.get(url)
             nodeinfo[nodename] = r.json()
-            print nodename
 
-        pass
+        return nodeinfo
 
 
 
 if __name__ == '__main__':
 
     razor = RazorSession(RAZOR_REST_URL)
-    razor.getNodes()
+    nodeinfo = razor.getNodes()
+    for node in nodeinfo:
+        print nodeinfo.__len__()
+
+
