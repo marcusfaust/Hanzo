@@ -18,13 +18,16 @@
 </div>
 {% endblock %}
 {% block content %}
-<div class="col-lg-6">
+<div class="col-lg-9">
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>Node Name</th>
                         <th>MAC Address</th>
+                        <th>Processor Count</th>
+                        <th>Total RAM</th>
+                        <th>Serial Number</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,6 +35,9 @@
                     <tr>
                         <td>{{ nodeinfo[node]['name'] }}</td>
                         <td>{{ nodeinfo[node]['facts']['macaddress'] }}</td>
+                        <td>{{ nodeinfo[node]['facts']['processorcount'] }}</td>
+                        <td>{{ nodeinfo[node]['facts']['memorysize_mb']|int  / 1000 }} GB</td>
+                        <td>{{ nodeinfo[node]['facts']['serialnumber'] }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

@@ -6,15 +6,17 @@ from config import *
 app = Flask(__name__)
 app.config.from_object('config')
 razor = RazorSession(RAZOR_REST_URL)
-nodeinfo = razor.getNodes()
+
 
 
 @app.route('/')
 def index():
+    nodeinfo = razor.getNodes()
     return render_template('index.html', nodeinfo = nodeinfo)
 
 @app.route('/nodes')
 def nodes():
+    nodeinfo = razor.getNodes()
     return render_template('nodes.html', nodeinfo = nodeinfo)
 
 
