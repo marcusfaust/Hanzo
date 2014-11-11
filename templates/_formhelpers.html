@@ -24,4 +24,21 @@
         {% endif %}
     </div>
 </div>
-{% endmacro %}}
+{% endmacro %}
+
+{% macro render_RU_field(field) %}
+
+<div class="form-group{% if field.errors %} has-error {% endif %}">
+    <div class="col-sm-6">
+        {{ field(class='form-control')|safe }}
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <span class="help-inline col-sm-2">[{{ error }}]</span><br>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endmacro %}
+
+
+}

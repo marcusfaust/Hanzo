@@ -27,6 +27,18 @@ class RazorSession:
         return nodeinfo
 
 
+    def getNodeNames(self, nodeinfo):
+
+        names = []
+
+        for node in nodeinfo:
+            names.append(nodeinfo[node]['name'])
+
+        return names
+
+
+
+
 
 if __name__ == '__main__':
 

@@ -34,10 +34,17 @@
                 {% for node in nodeinfo %}
                     <tr>
                         <td>{{ nodeinfo[node]['name'] }}</td>
+                        {% if nodeinfo[node].has_key('facts') %}
                         <td>{{ nodeinfo[node]['facts']['macaddress'] }}</td>
                         <td>{{ nodeinfo[node]['facts']['processorcount'] }}</td>
                         <td>{{ nodeinfo[node]['facts']['memorysize_mb']|int  / 1000 }} GB</td>
                         <td>{{ nodeinfo[node]['facts']['serialnumber'] }}</td>
+                        {% else %}
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
                 </tbody>

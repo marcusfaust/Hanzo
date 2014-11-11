@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %} - Run Log {% endblock %}
+{% block header %}
+ <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            Detected Nodes
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-dashboard"></i>  <a href={{ url_for('index') }}>Dashboard</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-table"></i> Detected Nodes
+                            </li>
+                        </ol>
+                    </div>
+</div>
+{% endblock %}
+{% block content %}
+{% from "_formhelpers.html" import render_field, render_bootstrap_field, render_RU_field %}
+<div class="col-lg-9">
+        <div class="table-responsive">
+            <form class="form-horizontal" role="form" method=post action="/assignru">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Node Name</th>
+                        <th>MAC Address</th>
+                        <th>Processor Count</th>
+                        <th>Total RAM</th>
+                        <th>Serial Number</th>
+                        <th>Assign RU</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for node in nodeinfo %}
+                    <tr>
+                        <td>{{ nodeinfo[node]['name'] }}</td>
+                        {% if nodeinfo[node].has_key('facts') %}
+                            <td>{{ nodeinfo[node]['facts']['macaddress'] }}</td>
+                            <td>{{ nodeinfo[node]['facts']['processorcount'] }}</td>
+                            <td>{{ nodeinfo[node]['facts']['memorysize_mb']|int  / 1000 }} GB</td>
+                            <td>{{ nodeinfo[node]['facts']['serialnumber'] }}</td>
+                            <td>{{ render_RU_field (form._fields[node]) }}</td>
+                        {% else %}
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type=submit value=Submit class="btn btn-primary">
+            </div>
+            </div>
+            </form>
+        </div>
+</div>
+{% endblock %}
+
+{#
+{% extends 'base.html' %}
+{% block content %}
+{% from "_formhelpers.html" import render_field, render_bootstrap_field, render_RU_field %}
+    <h2>New User Entry:  <small><sp><sp>Please provide Box account email and Mitrend info. </small></h2>
+    <br>
+    <br>
+<form class="form-horizontal" role="form" method=post action="/newuser">
+    {{ render_bootstrap_field(form.boxuseremail) }}
+    {{ render_bootstrap_field(form.mitrend_user) }}
+    {{ render_bootstrap_field(form.password) }}
+    {{ render_bootstrap_field(form.confirm) }}
+    <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <input type=submit value=Submit class="btn btn-primary">
+    </div>
+    </div>
+</form>
+{% endblock %}
+#}
