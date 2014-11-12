@@ -74,8 +74,9 @@ class RazorSession:
         for node in sorted_nodeinfo:
             rudict.update({nodeinfo[node]['name'] : nodeinfo[node]['metadata']['RU']})
 
+        rudict_sorted = sorted(rudict, key=rudict.get)
 
-        print "hello"
+        return rudict_sorted
 
 
     def toJSON_HASH(self, json_dict):

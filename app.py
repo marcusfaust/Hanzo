@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from forms import assignRU, NodeIdentities
 from wtforms import IntegerField
 from wtforms.validators import NumberRange
@@ -37,10 +37,18 @@ def assignru():
 
 @app.route('/nodeidentities', methods=['GET', 'POST'])
 def nodeidentities():
+
     nodeinfo = razor.getNodes()
     form = NodeIdentities(request.form)
+    sorted_ru_nodes = razor.getNodesWithRU()
+
+    if len(sorted_ru_nodes) < form.count.data:
+        nodecount = len(sorted_ru_nodes)
+    else:
+        nodecount = form.count.data
+
     if request.method == 'POST' and form.validate():
-        for i in range(0, form.count.data):
+        for i in range(0, nodecount):
             octet = int(extractLastOctet(form.starting_ip.data)) + i
             hostid = int(form.first_hostname_id.data) + i
             slen = len(form.first_hostname_id.data)
@@ -49,7 +57,11 @@ def nodeidentities():
             hostname = form.hostname_prefix.data + hostid
             ip = (extractSubnet(form.starting_ip.data)) + str(octet)
 
-        pass
+            razor.updateMeta(sorted_ru_nodes[i], 'HZ_ipaddress', ip)
+            razor.updateMeta(sorted_ru_nodes[i], 'HZ_hostname', hostname)
+
+        return redirect(url_for('index'))
+
     return render_template('nodeidentities.html', nodeinfo = nodeinfo, form=form)
 
 
