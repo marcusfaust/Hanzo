@@ -4,14 +4,14 @@
  <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Detected Nodes
+                            Assign Rack Elevations to Nodes
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href={{ url_for('index') }}>Dashboard</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-table"></i> Detected Nodes
+                                <i class="fa fa-table"></i> Assign Rack Elevations
                             </li>
                         </ol>
                     </div>
@@ -48,6 +48,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td>{{ render_RU_field (form._fields[node]) }}</td>
                         {% endif %}
                     </tr>
                 {% endfor %}

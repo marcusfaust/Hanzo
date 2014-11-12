@@ -28,6 +28,7 @@
                         <th>Processor Count</th>
                         <th>Total RAM</th>
                         <th>Serial Number</th>
+                        <th>RU</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,15 +36,20 @@
                     <tr>
                         <td>{{ nodeinfo[node]['name'] }}</td>
                         {% if nodeinfo[node].has_key('facts') %}
-                        <td>{{ nodeinfo[node]['facts']['macaddress'] }}</td>
-                        <td>{{ nodeinfo[node]['facts']['processorcount'] }}</td>
-                        <td>{{ nodeinfo[node]['facts']['memorysize_mb']|int  / 1000 }} GB</td>
-                        <td>{{ nodeinfo[node]['facts']['serialnumber'] }}</td>
+                            <td>{{ nodeinfo[node]['facts']['macaddress'] }}</td>
+                            <td>{{ nodeinfo[node]['facts']['processorcount'] }}</td>
+                            <td>{{ nodeinfo[node]['facts']['memorysize_mb']|int  / 1000 }} GB</td>
+                            <td>{{ nodeinfo[node]['facts']['serialnumber'] }}</td>
                         {% else %}
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        {% endif %}
+                        {% if nodeinfo[node]['metadata'].has_key('RU') %}
+                            <td>{{ nodeinfo[node]['metadata']['RU'] }}</td>
+                        {% else %}
+                            <td></td>
                         {% endif %}
                     </tr>
                 {% endfor %}

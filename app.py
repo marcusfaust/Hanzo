@@ -1,8 +1,8 @@
 import os
 from flask import Flask, render_template, request
-from forms import assignRU
+from forms import assignRU, NodeIdentities
 from wtforms import Form, TextField, PasswordField, IntegerField
-from wtforms.validators import Required, Email, EqualTo, NumberRange
+from wtforms.validators import Required, Email, EqualTo, NumberRange, IPAddress
 from Hanzo import *
 from config import *
 
@@ -30,8 +30,19 @@ def assignru():
         setattr(assignRU, node, IntegerField('node RU', [NumberRange(min=1, max=60, message = 'Invalid Integer')]))
     form = assignRU(request.form)
     if request.method == 'POST' and form.validate():
+        for node in fields:
+            razor.updateRU(node,form.data[node])
         pass
     return render_template('assignru.html', nodeinfo = nodeinfo, form=form, fields=form._fields)
+
+
+@app.route('/nodeidentities', methods=['GET', 'POST'])
+def nodeidentities():
+    nodeinfo = razor.getNodes()
+    form = NodeIdentities(request.form)
+    if request.method == 'POST' and form.validate():
+        pass
+    return render_template('nodeidentities.html', nodeinfo = nodeinfo, form=form)
 
 
 if __name__ == '__main__':
