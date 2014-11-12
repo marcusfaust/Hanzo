@@ -66,11 +66,15 @@ class RazorSession:
 
         nodeinfo = self.getNodes()
         sorted_nodeinfo = []
+        rudict = {}
         for i in nodeinfo:
             if (nodeinfo[i]['metadata'].has_key('RU')):
                 sorted_nodeinfo.append(i)
 
-        sorted_nodeinfo.sort(key=operator.itemgetter('RU'))
+        for node in sorted_nodeinfo:
+            rudict.update({nodeinfo[node]['name'] : nodeinfo[node]['metadata']['RU']})
+
+
         print "hello"
 
 
