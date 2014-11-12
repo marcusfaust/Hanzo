@@ -156,13 +156,13 @@
                         <a href="{{ url_for('index') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="{{ url_for('nodes') }}"><i class="fa fa-fw fa-table"></i> Detected Nodes   <span class="badge">{{ nodeinfo.__len__() }}</span></a>
+                        <a href="{{ url_for('nodes') }}"><i class="fa fa-fw fa-sitemap"></i> Detected Nodes   <span class="badge">{{ nodeinfo.__len__() }}</span></a>
                     </li>
                     <li>
                         <a href="{{ url_for('assignru') }}"><i class="fa fa-fw fa-building"></i> Assign Rack Elevations</a>
                     </li>
                     <li>
-                        <a href="/static/tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
+                        <a href="{{ url_for('nodeidentities') }}"><i class="fa fa-fw fa-male"></i> Assign Node Identities</a>
                     </li>
                     <li>
                         <a href="/static/forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>

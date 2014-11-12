@@ -1,15 +1,14 @@
 import os
 from flask import Flask, render_template, request
 from forms import assignRU, NodeIdentities
-from wtforms import Form, TextField, PasswordField, IntegerField
-from wtforms.validators import Required, Email, EqualTo, NumberRange, IPAddress
+from wtforms import IntegerField
+from wtforms.validators import NumberRange
 from Hanzo import *
 from config import *
 
 app = Flask(__name__)
 app.config.from_object('config')
 razor = RazorSession(RAZOR_REST_URL)
-
 
 
 @app.route('/')
@@ -41,6 +40,15 @@ def nodeidentities():
     nodeinfo = razor.getNodes()
     form = NodeIdentities(request.form)
     if request.method == 'POST' and form.validate():
+        for i in range(0, form.count.data):
+            octet = int(extractLastOctet(form.starting_ip.data)) + i
+            hostid = int(form.first_hostname_id.data) + i
+            slen = len(form.first_hostname_id.data)
+            while(len(str(hostid)) < slen):
+                hostid = '0' + str(hostid)
+            hostname = form.hostname_prefix.data + hostid
+            ip = (extractSubnet(form.starting_ip.data)) + str(octet)
+
         pass
     return render_template('nodeidentities.html', nodeinfo = nodeinfo, form=form)
 

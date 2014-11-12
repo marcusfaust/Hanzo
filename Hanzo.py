@@ -1,6 +1,8 @@
+import re
 import requests
 import urllib
 import json
+import operator
 from config import *
 
 
@@ -51,6 +53,26 @@ class RazorSession:
         print r
 
 
+    def updateMeta(self, node, key, value):
+        url = self.baseurl + "/commands/update-node-metadata"
+        json_dict = {'node': node,
+                     'key': key,
+                     'value': value}
+        headers = {"Content-type": "application/json"}
+        r = requests.post(url, data=json.dumps(json_dict), headers=headers)
+
+
+    def getNodesWithRU(self):
+
+        nodeinfo = self.getNodes()
+        sorted_nodeinfo = []
+        for i in nodeinfo:
+            if (nodeinfo[i]['metadata'].has_key('RU')):
+                sorted_nodeinfo.append(i)
+
+        sorted_nodeinfo.sort(key=operator.itemgetter('RU'))
+        print "hello"
+
 
     def toJSON_HASH(self, json_dict):
 
@@ -67,9 +89,20 @@ class RazorSession:
 
         return results
 
+
+def extractLastOctet(ipaddress):
+    last = re.split(r'(.*)\.(.*)\.(.*)\.(.*)', ipaddress)
+    str_last = str(last[-2])
+    return str_last
+
+def extractSubnet(ipaddress):
+    subnet = re.split(r'(.*\..*\..*\.).*', ipaddress)
+    return subnet[-2]
+
+
 if __name__ == '__main__':
 
     razor = RazorSession(RAZOR_REST_URL)
-    node = razor.test_filter()
+    razor.getNodesWithRU()
 
 

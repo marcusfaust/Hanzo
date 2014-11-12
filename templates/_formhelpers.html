@@ -30,7 +30,7 @@
 
 <div class="form-group{% if field.errors %} has-error {% endif %}">
     <div class="col-sm-6">
-        {{ field(class='form-control')|safe }}
+        {{ field(class='form-control input-sm')|safe }}
         {% if field.errors %}
             {% for error in field.errors %}
                 <span class="help-inline col-sm-2">[{{ error }}]</span><br>
