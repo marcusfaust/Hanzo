@@ -92,6 +92,12 @@ def nodeidentities():
     return render_template('nodeidentities.html', nodeinfo = nodeinfo, form=form)
 
 
+@app.route('/dhcp')
+def dhcp():
+    nodelist = razor.getNodesWithRU()
+    razor.writeDhcpOptions(DHCP_OPTIONS_FILE)
+    restartDHCP()
+
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port, debug=True)
