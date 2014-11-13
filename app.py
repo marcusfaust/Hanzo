@@ -103,11 +103,11 @@ def deploy():
 
     return redirect(url_for('index'))
 
-@app.route('/forge')
+@app.route('/forge', methods=['GET', 'POST'])
 def forge():
     nodeinfo = razor.getNodes()
     deployable_nodelist = razor.getDeployableNodes()
-    message = "There are no Deployable Nodes"
+    message = ""
 
     if request.method == 'POST':
 
@@ -118,7 +118,7 @@ def forge():
         if not razor.validateESXiGlobals():
             message="One or More ESXi Global Paramaters are Missing!"
             return render_template('forge.html', nodeinfo = nodeinfo, razor = razor, deployable_nodelist = deployable_nodelist, message = message)
-            
+
         nodelist = razor.getNodesWithRU()
         razor.writeDhcpOptions(DHCP_OPTIONS_FILE, nodelist)
         restartDHCP()
