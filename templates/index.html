@@ -56,7 +56,11 @@
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-3">
-                                        <i class="fa fa-frown-o fa-5x"></i>
+                                        {% if dashcounts['num_ru_only'] == "0" %}
+                                            <i class="fa fa-smile-o fa-5x"></i>
+                                        {% else %}
+                                            <i class="fa fa-frown-o fa-5x"></i>
+                                        {% endif %}
                                     </div>
                                     <div class="col-xs-9 text-right">
                                         <div class="huge">{{ dashcounts['num_ru_only'] }}</div>
