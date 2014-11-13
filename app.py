@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for
-from forms import assignRU, NodeIdentities
+from forms import assignRU, NodeIdentities, ESXiGlobalParams
 from wtforms import IntegerField
 from wtforms.validators import NumberRange
 from Hanzo import *
@@ -14,7 +14,11 @@ razor = RazorSession(RAZOR_REST_URL)
 @app.route('/')
 def index():
     nodeinfo = razor.getNodes()
-    return render_template('index.html', nodeinfo = nodeinfo)
+    esxi_subnetmask = razor.esxi_subnetmask
+    esxi_default_gw = razor.esxi_default_gw
+    esxi_dns = razor.esxi_dns
+    esxi_domain_suffix = razor.esxi_domain_suffix
+    return render_template('index.html', nodeinfo = nodeinfo, esxi_subnetmask = esxi_subnetmask, esxi_default_gw = esxi_default_gw, esxi_dns = esxi_dns, esxi_domain_suffix = esxi_domain_suffix)
 
 @app.route('/nodes')
 def nodes():
@@ -34,6 +38,20 @@ def assignru():
         pass
     return render_template('assignru.html', nodeinfo = nodeinfo, form=form, fields=form._fields)
 
+
+@app.route('/esxiglobal', methods=['GET', 'POST'])
+def esxiglobal():
+    nodeinfo = razor.getNodes()
+    form = ESXiGlobalParams(request.form)
+    if request.method == 'POST' and form.validate():
+        razor.esxi_subnetmask = form.subnetmask.data
+        razor.esxi_default_gw = form.default_gw.data
+        razor.esxi_dns = form.dns.data
+        razor.esxi_domain_suffix = form.domain_suffix.data
+
+        return redirect(url_for('index'))
+
+    return render_template('esxiglobal.html', nodeinfo=nodeinfo, form=form)
 
 @app.route('/nodeidentities', methods=['GET', 'POST'])
 def nodeidentities():

@@ -26,3 +26,11 @@ class NodeIdentities(Form):
     first_hostname_id = TextField('First Hostname Identifier', [Required(), Regexp(r'^[0-9]*$', message='Invalid Integer')])
     count = IntegerField('Item Count', [Required(), NumberRange(min=1, max=60, message='Outside of Range')])
 
+
+class ESXiGlobalParams(Form):
+    subnetmask = TextField('Mgmt Subnet Mask', [Required(), Regexp(r'^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$', message='Invalid IP Address')])
+    default_gw = TextField('Mgmt Default GW', [Required(), Regexp(r'^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$', message='Invalid IP Address')])
+    dns = TextField('First DNS Server', [Required(), Regexp(r'^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$', message='Invalid IP Address')])
+    domain_suffix = TextField('Domain Name', [Required()])
+
+

@@ -2,7 +2,6 @@ import re
 import requests
 import urllib
 import json
-import operator
 from config import *
 
 
@@ -11,6 +10,10 @@ class RazorSession:
 
     def __init__(self, razorurl):
         self.baseurl = razorurl
+        self.esxi_subnetmask = ""
+        self.esxi_default_gw = ""
+        self.esxi_dns = ""
+        self.esxi_domain_suffix = ""
         pass
 
     def getNodes(self):

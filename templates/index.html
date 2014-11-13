@@ -106,10 +106,31 @@
                                 <h3 class="panel-title"><i class="fa fa-globe fa-fw"></i> Current ESXi Global Parameters</h3>
                             </div>
                             <div class="panel-body">
-                                <div id="morris-area-chart"></div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <td>Mgmt. Subnet Mask:</td>
+                                                <td>{{ esxi_subnetmask }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mgmt. Default Gateway:</td>
+                                                <td>{{ esxi_default_gw }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mgmt. DNS:</td>
+                                                <td>{{ esxi_dns }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mgmt. Domain Name:</td>
+                                                <td>{{ esxi_domain_suffix }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <div class="text-right">
-                                    <a href="#">Edit Details <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a href="{{ url_for('esxiglobal') }}">Edit Details <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                     </div>
