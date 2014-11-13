@@ -35,6 +35,30 @@ class RazorSession:
         return nodeinfo
 
 
+    def getDashboardCounts(self, nodeinfo):
+
+        num_ru_only = 0
+        num_all_info = 0
+        num_deployed = 0
+
+        dashcounts = {}
+
+        for node in nodeinfo:
+            if nodeinfo[node].has_key('metadata'):
+                if nodeinfo[node]['metadata'].has_key('RU') and nodeinfo[node]['metadata']['RU'] is not "":
+                    if nodeinfo[node]['metadata'].has_key('HZ_hostname') and nodeinfo[node]['metadata']['HZ_hostname'] is not "":
+                        if nodeinfo[node]['metadata'].has_key('HZ_is_deploy_ready') and nodeinfo[node]['metadata']['HZ_is_deploy_ready'] == "true":
+                            num_deployed += 1
+                        else:
+                            num_all_info += 1
+                    else:
+                        num_ru_only += 1
+
+        dashcounts['num_ru_only', 'num_all_info', 'num_deployed'] = num_ru_only, num_all_info, num_deployed
+
+        return dashcounts
+
+
     def getNodeNames(self, nodeinfo):
 
         names = []

@@ -14,11 +14,12 @@ razor = RazorSession(RAZOR_REST_URL)
 @app.route('/')
 def index():
     nodeinfo = razor.getNodes()
+    dashcounts = razor.getDashboardCounts(nodeinfo)
     esxi_subnetmask = razor.esxi_subnetmask
     esxi_default_gw = razor.esxi_default_gw
     esxi_dns = razor.esxi_dns
     esxi_domain_suffix = razor.esxi_domain_suffix
-    return render_template('index.html', nodeinfo = nodeinfo, esxi_subnetmask = esxi_subnetmask, esxi_default_gw = esxi_default_gw, esxi_dns = esxi_dns, esxi_domain_suffix = esxi_domain_suffix)
+    return render_template('index.html', nodeinfo = nodeinfo, esxi_subnetmask = esxi_subnetmask, esxi_default_gw = esxi_default_gw, esxi_dns = esxi_dns, esxi_domain_suffix = esxi_domain_suffix, dashcounts=dashcounts)
 
 @app.route('/nodes')
 def nodes():
