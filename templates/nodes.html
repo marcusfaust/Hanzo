@@ -48,19 +48,25 @@
                             <td></td>
                             <td></td>
                         {% endif %}
-                        {% if nodeinfo[node]['metadata'].has_key('RU') %}
-                            <td>{{ nodeinfo[node]['metadata']['RU'] }}</td>
+                        {% if nodeinfo[node].has_key('metadata') %}
+                            {% if nodeinfo[node]['metadata'].has_key('RU') %}
+                                <td>{{ nodeinfo[node]['metadata']['RU'] }}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                            {% if nodeinfo[node]['metadata'].has_key('HZ_hostname') %}
+                                <td>{{ nodeinfo[node]['metadata']['HZ_hostname'] }}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                            {% if nodeinfo[node]['metadata'].has_key('HZ_ipaddress') %}
+                                <td>{{ nodeinfo[node]['metadata']['HZ_ipaddress'] }}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
                         {% else %}
                             <td></td>
-                        {% endif %}
-                        {% if nodeinfo[node]['metadata'].has_key('HZ_hostname') %}
-                            <td>{{ nodeinfo[node]['metadata']['HZ_hostname'] }}</td>
-                        {% else %}
                             <td></td>
-                        {% endif %}
-                        {% if nodeinfo[node]['metadata'].has_key('HZ_ipaddress') %}
-                            <td>{{ nodeinfo[node]['metadata']['HZ_ipaddress'] }}</td>
-                        {% else %}
                             <td></td>
                         {% endif %}
                     </tr>

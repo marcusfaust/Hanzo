@@ -124,7 +124,7 @@ class RazorSession:
         nodeinfo = self.getNodes()
 
         for node in nodelist:
-            razor.updateMeta(node, 'HZ_is_deploy_ready', 'true')
+            self.updateMeta(node, 'HZ_is_deploy_ready', 'true')
 
 
 
