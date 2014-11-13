@@ -119,6 +119,15 @@ class RazorSession:
         f.closed
 
 
+    def deployNodes(self, nodelist):
+
+        nodeinfo = self.getNodes()
+
+        for node in nodelist:
+            razor.updateMeta(node, 'HZ_is_deploy_ready', 'true')
+
+
+
 
 def extractLastOctet(ipaddress):
     last = re.split(r'(.*)\.(.*)\.(.*)\.(.*)', ipaddress)

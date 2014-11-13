@@ -1,4 +1,4 @@
-import os
+
 from flask import Flask, render_template, request, redirect, url_for
 from forms import assignRU, NodeIdentities, ESXiGlobalParams
 from wtforms import IntegerField
@@ -86,17 +86,21 @@ def nodeidentities():
 
             razor.updateMeta(sorted_ru_nodes[i], 'HZ_ipaddress', ip)
             razor.updateMeta(sorted_ru_nodes[i], 'HZ_hostname', hostname)
+            razor.updateMeta(sorted_ru_nodes[i], 'HZ_is_deploy_ready', 'false')
 
         return redirect(url_for('index'))
 
     return render_template('nodeidentities.html', nodeinfo = nodeinfo, form=form)
 
 
-@app.route('/dhcp')
-def dhcp():
+@app.route('/deploy')
+def deploy():
     nodelist = razor.getNodesWithRU()
     razor.writeDhcpOptions(DHCP_OPTIONS_FILE, nodelist)
     restartDHCP()
+    razor.deployNodes(nodelist)
+
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
