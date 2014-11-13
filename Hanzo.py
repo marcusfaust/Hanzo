@@ -107,7 +107,7 @@ class RazorSession:
             f.write(('option routers ' + self.esxi_default_gw + ';\n'))
             f.write(('option subnet-mask ' + self.esxi_subnetmask + ';\n'))
             f.write(('option domain-name-servers ' + self.esxi_dns + ';\n'))
-            f.write(('option domain-name ' + self.esxi_domain_suffix + ';\n'))
+            f.write(('option domain-name "' + self.esxi_domain_suffix + '";\n'))
 
             for node in nodelist:
                 f.write('\n')

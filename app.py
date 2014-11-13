@@ -95,7 +95,7 @@ def nodeidentities():
 @app.route('/dhcp')
 def dhcp():
     nodelist = razor.getNodesWithRU()
-    razor.writeDhcpOptions(DHCP_OPTIONS_FILE)
+    razor.writeDhcpOptions(DHCP_OPTIONS_FILE, nodelist)
     restartDHCP()
 
 if __name__ == '__main__':
