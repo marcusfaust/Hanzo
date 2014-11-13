@@ -87,7 +87,7 @@ def nodeidentities():
 
             razor.updateMeta(sorted_ru_nodes[i], 'HZ_ipaddress', ip)
             razor.updateMeta(sorted_ru_nodes[i], 'HZ_hostname', hostname)
-            razor.updateMeta(sorted_ru_nodes[i], 'HZ_is_deploy_ready', 'false')
+            razor.updateMeta(sorted_ru_nodes[i], 'HZ_is_deploy_ready', False)
 
         return redirect(url_for('index'))
 
@@ -102,6 +102,32 @@ def deploy():
     razor.deployNodes(nodelist)
 
     return redirect(url_for('index'))
+
+@app.route('/forge')
+def forge():
+    nodeinfo = razor.getNodes()
+    deployable_nodelist = razor.getDeployableNodes()
+    message = "There are no Deployable Nodes"
+
+    if request.method == 'POST':
+
+        if len(deployable_nodelist) is 0:
+            message="There are no Deployable Nodes!"
+            return render_template('forge.html', nodeinfo = nodeinfo, razor = razor, deployable_nodelist = deployable_nodelist, message = message)
+
+        if not razor.validateESXiGlobals():
+            message="One or More ESXi Global Paramaters are Missing!"
+            return render_template('forge.html', nodeinfo = nodeinfo, razor = razor, deployable_nodelist = deployable_nodelist, message = message)
+            
+        nodelist = razor.getNodesWithRU()
+        razor.writeDhcpOptions(DHCP_OPTIONS_FILE, nodelist)
+        restartDHCP()
+        razor.deployNodes(nodelist)
+
+        return redirect(url_for('index'))
+
+    return render_template('forge.html', nodeinfo = nodeinfo, razor = razor, deployable_nodelist = deployable_nodelist, message = message)
+
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

@@ -44,6 +44,7 @@ class RazorSession:
         dashcounts = {}
 
         for node in nodeinfo:
+
             if nodeinfo[node].has_key('metadata'):
                 if nodeinfo[node]['metadata'].has_key('RU') and nodeinfo[node]['metadata']['RU'] is not "":
                     if nodeinfo[node]['metadata'].has_key('HZ_hostname') and nodeinfo[node]['metadata']['HZ_hostname'] is not "":
@@ -53,6 +54,10 @@ class RazorSession:
                             num_all_info += 1
                     else:
                         num_ru_only += 1
+                else:
+                    num_ru_only += 1
+            else:
+                num_ru_only += 1
 
         dashcounts['num_ru_only'] = num_ru_only
         dashcounts['num_all_info'] = num_all_info
@@ -106,6 +111,24 @@ class RazorSession:
         rudict_sorted = sorted(rudict, key=rudict.get)
 
         return rudict_sorted
+
+
+    def getDeployableNodes(self):
+        nodeinfo = self.getNodes()
+        deployable_nodelist = []
+        for node in nodeinfo:
+            if nodeinfo[node].has_key('metadata'):
+                if nodeinfo[node]['metadata'].has_key('HZ_is_deploy_ready') and nodeinfo[node]['metadata']['HZ_is_deploy_ready'] is False:
+                    deployable_nodelist.append(nodeinfo[node]['name'])
+
+        return deployable_nodelist
+
+    def validateESXiGlobals(self):
+
+        if self.esxi_default_gw is "" or self.esxi_dns is "" or self.esxi_subnetmask is "" or self.esxi_domain_suffix is "":
+            return False
+        else:
+            return True
 
 
     def toJSON_HASH(self, json_dict):
