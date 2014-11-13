@@ -54,7 +54,9 @@ class RazorSession:
                     else:
                         num_ru_only += 1
 
-        dashcounts['num_ru_only', 'num_all_info', 'num_deployed'] = num_ru_only, num_all_info, num_deployed
+        dashcounts['num_ru_only'] = num_ru_only
+        dashcounts['num_all_info'] = num_all_info
+        dashcounts['num_deployed'] = num_deployed
 
         return dashcounts
 
