@@ -43,6 +43,7 @@ def assignru():
 def esxiglobal():
     nodeinfo = razor.getNodes()
     form = ESXiGlobalParams(request.form)
+
     if request.method == 'POST' and form.validate():
         razor.esxi_subnetmask = form.subnetmask.data
         razor.esxi_default_gw = form.default_gw.data
@@ -51,6 +52,14 @@ def esxiglobal():
 
         return redirect(url_for('index'))
 
+    if razor.esxi_subnetmask != "":
+        form.subnetmask.data = razor.esxi_subnetmask
+    if razor.esxi_default_gw != "":
+        form.default_gw.data = razor.esxi_default_gw
+    if razor.esxi_dns != "":
+        form.dns.data = razor.esxi_dns
+    if razor.esxi_domain_suffix != "":
+        form.domain_suffix.data = razor.esxi_domain_suffix
     return render_template('esxiglobal.html', nodeinfo=nodeinfo, form=form)
 
 @app.route('/nodeidentities', methods=['GET', 'POST'])

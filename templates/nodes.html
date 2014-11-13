@@ -18,17 +18,19 @@
 </div>
 {% endblock %}
 {% block content %}
-<div class="col-lg-9">
+<div class="col-lg-12">
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>Node Name</th>
+                        <th>Name</th>
                         <th>MAC Address</th>
-                        <th>Processor Count</th>
-                        <th>Total RAM</th>
-                        <th>Serial Number</th>
+                        <th>Proc Count</th>
+                        <th>RAM</th>
+                        <th>Serial</th>
                         <th>RU</th>
+                        <th>Hostname</th>
+                        <th>IP address</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,6 +50,16 @@
                         {% endif %}
                         {% if nodeinfo[node]['metadata'].has_key('RU') %}
                             <td>{{ nodeinfo[node]['metadata']['RU'] }}</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        {% if nodeinfo[node]['metadata'].has_key('HZ_hostname') %}
+                            <td>{{ nodeinfo[node]['metadata']['HZ_hostname'] }}</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        {% if nodeinfo[node]['metadata'].has_key('HZ_ipaddress') %}
+                            <td>{{ nodeinfo[node]['metadata']['HZ_ipaddress'] }}</td>
                         {% else %}
                             <td></td>
                         {% endif %}
