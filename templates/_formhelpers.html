@@ -32,8 +32,8 @@
 
 {% macro render_RU_field(field) %}
 
-<div class="form-group{% if field.errors %} has-error {% endif %}">
-    <div class="col-sm-6">
+<div class="{% if field.errors %} has-error {% endif %}">
+    <div class="col-sm-5">
         {{ field(class='form-control input-sm')|safe }}
         {% if field.errors %}
             {% for error in field.errors %}
@@ -43,6 +43,3 @@
     </div>
 </div>
 {% endmacro %}
-
-
-}
