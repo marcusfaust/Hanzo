@@ -1,3 +1,4 @@
+{% set active_page = active_page|default('index') %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -152,22 +153,22 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li class="active">
+                    <li {% if active_page == "index" %} class="active" {% endif %}>
                         <a href="{{ url_for('index') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
-                    <li>
+                    <li {% if active_page == "nodes" %} class="active" {% endif %}>
                         <a href="{{ url_for('nodes') }}"><i class="fa fa-fw fa-sitemap"></i> Detected Nodes   <span class="badge">{{ nodeinfo.__len__() }}</span></a>
                     </li>
-                    <li>
+                    <li {% if active_page == "assignru" %} class="active" {% endif %}>
                         <a href="{{ url_for('assignru') }}"><i class="fa fa-fw fa-building"></i> Assign Rack Elevations</a>
                     </li>
-                    <li>
+                    <li {% if active_page == "nodeidentities" %} class="active" {% endif %}>
                         <a href="{{ url_for('nodeidentities') }}"><i class="fa fa-fw fa-male"></i> Assign Node Identities</a>
                     </li>
-                    <li>
+                    <li {% if active_page == "esxiglobal" %} class="active" {% endif %}>
                          <a href="{{ url_for('esxiglobal') }}"><i class="fa fa-fw fa-globe"></i> Edit ESXi Global Params</a>
                     </li>
-                    <li>
+                    <li {% if active_page == "forge" %} class="active" {% endif %}>
                          <a href="{{ url_for('forge') }}"><i class="fa fa-fw fa-cog fa-spin"></i> Forge Deployable Nodes</a>
                     </li>
                     <!--
